@@ -2,24 +2,27 @@
 
 Este repositório contém a implementação das questões propostas na prova técnica, demonstrando:
 
-- Automação E2E Web com Cypress
-- Testes de API com Python (requests)
-- Estruturação de projeto e organização técnica
-- Documentação formal de testes
-- Preparação para CI/CD
+- Automação E2E Web com Cypress  
+- Testes de API com Python (requests)  
+- Estruturação de projeto e organização técnica  
+- Documentação formal de testes  
+- Preparação para integração com CI/CD  
 
 O foco da implementação foi garantir robustez, clareza estrutural e aderência total aos critérios do enunciado.
 
+---
 
-Este repositório contém a implementação das questões propostas na prova técnica utilizando:
+## Tecnologias Utilizadas
 
-Cypress (Questão 1 – Teste E2E Web)
+- **Cypress** – Automação E2E (Questão 1)  
+- **Python + requests** – Testes de API (Questão 2)  
+- **GitHub Actions** – Pipeline CI/CD (Questão 3 – descrita em documentação)
 
-Python + Requests (Questão 2 – Teste de API)
+---
 
-Configuração de CI/CD com GitHub Actions (Questão 3 – descrita)
+## Estrutura do Projeto
 
-Estrutura do Projeto
+```text
 cypress/
  └── e2e/
      └── amazon/
@@ -32,56 +35,98 @@ docs/
  └── questao1.md
  └── questao2.md
  └── questao3.md
+```
 
-Questão 1 – Teste E2E com Cypress
+---
+
+## Questão 1 – Teste E2E com Cypress
 
 O teste automatiza o seguinte fluxo:
 
-Acessa https://www.amazon.com.br/
+1. Acessa https://www.amazon.com.br/  
+2. Pesquisa pelo livro  
+   **"AI Engineering: Building Applications with Foundation Models"**  
+3. Valida:
+   - Autor: **Chip Huyen**
+   - Idioma: **Inglês**
+   - Formato: **Livro físico (Capa Comum)**
+   - Condição: **Novo**
+4. Adiciona o livro ao carrinho  
+5. Valida a mensagem exibida:  
+   **"Adicionado ao carrinho"**
 
-Pesquisa pelo livro AI Engineering: Building Applications with Foundation Models
+Documentação detalhada:  
+➡ `docs/questao1.md`
 
-Valida:
+---
 
-Autor: Chip Huyen
+## Como Executar os Testes E2E (Cypress)
 
-Idioma: Inglês
+### Instalar dependências
 
-Formato: Livro físico (Capa Comum)
-
-Condição: Novo
-
-Adiciona ao carrinho
-
-Valida mensagem exata: “Adicionado ao carrinho”
-
-📄 Documentação detalhada (história do usuário, critérios de aceite, decisões técnicas e casos de teste):
-➡ Ver docs/questao1.md
-
-Como executar os testes Cypress
-1️⃣ Instalar dependências
+```bash
 npm install
+```
 
-2️⃣ Executar em modo interativo
+### Execução modo interativo
+
+```bash
 npx cypress open
+```
 
-3️⃣ Executar em modo headless
+### Execução modo headless
+
+```bash
 npx cypress run
+```
 
-Questão 2 – Teste de API (Python)
+---
 
-Script implementado utilizando requests.
+## Questão 2 – Teste de API (Python)
 
-Executar:
+Script implementado utilizando a biblioteca `requests`.
+
+### Executar
+
+```bash
 pip install -r requirements.txt
 python api/posts_api_test.py
+```
 
+Documentação detalhada:  
+➡ `docs/questao2.md`
 
-📄 Documentação detalhada:
-➡ Ver docs/questao2.md
+---
 
-Questão 3 – CI/CD
+## Questão 3 – CI/CD
 
-A execução automatizada dos testes é descrita em:
+A estratégia de integração contínua inclui:
 
-➡ Ver docs/questao3.md
+- Execução automática via GitHub Actions  
+- Disparo automático em push/pull request  
+- Falha do pipeline em caso de erro  
+- Possibilidade de paralelismo  
+
+Detalhamento completo:  
+➡ `docs/questao3.md`
+
+---
+
+## Requisitos
+
+- Node.js 18+  
+- Python 3.10+  
+- npm ou yarn  
+- pip  
+
+---
+
+## Considerações Finais
+
+A implementação foi estruturada visando:
+
+- Clareza e organização  
+- Robustez na execução  
+- Manutenibilidade  
+- Separação adequada entre testes E2E e API  
+- Documentação formal alinhada a contexto corporativo  

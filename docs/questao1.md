@@ -1,127 +1,187 @@
-Questão 1 — Teste E2E (Cypress) — Amazon BR — Adicionar livro físico NOVO ao carrinho
+# Questão 1 — Teste E2E (Cypress)  
+## Amazon BR — Adicionar livro físico NOVO ao carrinho
 
-História do usuário
+---
 
-Como cliente da Amazon Brasil, quero pesquisar pelo livro “AI Engineering: Building Applications with Foundation Models” e adicioná-lo ao carrinho como livro físico e novo, garantindo que é a edição em inglês e que o autor é Chip Huyen, para que eu realize a compra do item correto.
+## História do Usuário
 
-Critérios de aceite
+Como cliente da Amazon Brasil,  
+quero pesquisar pelo livro:
 
-Acessar https://www.amazon.com.br/
+AI Engineering: Building Applications with Foundation Models
 
-Pesquisar pelo texto: “AI Engineering: Building Applications with Foundation Models”
+e adicioná-lo ao carrinho como livro físico e novo, garantindo que:
 
-Adicionar o livro ao carrinho garantindo:
+- É a edição em inglês
+- O autor é Chip Huyen
 
-(i) Idioma: Inglês
+para que eu realize a compra do item correto.
 
-(ii) Autor: Chip Huyen
+---
 
-(iii) Formato: livro físico (Capa Comum / Paperback)
+## Critérios de Aceite
 
-(iv) Condição: Novo
+1. Acessar a URL:
+   https://www.amazon.com.br/
 
-Validar que a mensagem exibida é exatamente: “Adicionado ao carrinho”
+2. No campo de busca (#twotabsearchtextbox), digitar EXATAMENTE o texto:
 
-Documentar história, critérios e casos de teste.
+   AI Engineering: Building Applications with Foundation Models
 
-Estratégia e decisões de automação
-Por que validar Autor/Idioma na página do produto (PDP) e não no carrinho
+3. Submeter a busca clicando no botão:
+   #nav-search-submit-button
 
-A Amazon BR nem sempre exibe no carrinho os metadados completos (idioma, autor e condição) com consistência. Esses dados ficam mais estáveis e rastreáveis na PDP, que é a fonte primária de informação do item.
-Por isso, a automação:
+4. Abrir o resultado correspondente ao livro:
 
-abre o resultado do livro
+   AI Engineering: Building Applications with Foundation Models
 
-valida título, autor e idioma diretamente na PDP
+5. Validar na PDP (Product Detail Page):
 
-Isso reduz flakiness e melhora a rastreabilidade do requisito.
+   - Título contém:
+     AI Engineering
 
-Por que o fluxo usa “Outros vendedores na Amazon” (painel lateral) para “Novo” + “Capa Comum”
+   - Autor contém:
+     Chip Huyen
 
-Na Amazon, o estado “Novo/Usado” frequentemente aparece em:
+   - Idioma contém:
+     Inglês
 
-lista de ofertas,
+6. Acessar a seção:
+   Outros vendedores na Amazon
 
-painel lateral (“Outros vendedores na Amazon”),
+7. No painel lateral de ofertas (side sheet):
 
-ou página de ofertas (offer listing)
+   - Validar presença de:
+     Capa Comum
 
-O comportamento real observado na execução foi:
+   - Validar presença de:
+     Novo
 
-ao clicar em “Outros vendedores na Amazon”, a Amazon abre um painel lateral (side sheet / smart wagons / dynamic offers), e nem sempre um a-popover.
+   - Clicar em:
+     Adicionar ao carrinho
 
-esse painel é o ponto onde o usuário escolhe a oferta e onde “Novo” e “Capa Comum” aparecem com consistência.
+8. Validar que a mensagem exibida é EXATAMENTE:
 
-Decisão: ancorar a validação de “Novo” e “Capa Comum” no mesmo contexto onde o CTA (“Adicionar ao carrinho”) é acionado, garantindo que:
+   Adicionado ao carrinho
 
-a oferta selecionada é Novo
+---
 
-o formato é físico (Capa Comum)
+# Estratégia e Decisões de Automação
 
-o clique em “Adicionar ao carrinho” está coerente com o requisito
+## Validação de Autor e Idioma na PDP
 
-Por que a pesquisa é submetida pelo botão e não por {enter}
+A validação de:
 
-O autocomplete/flyouts da Amazon pode interceptar Enter e gerar intermitência (foco roubado, sugestões, overlays). O submit pelo botão #nav-search-submit-button é o caminho mais estável e mais próximo do comportamento do usuário.
+- Autor
+- Idioma
 
-Como foi tratado erro de JavaScript do site
+é feita diretamente na PDP porque:
 
-O site pode lançar exceções de front-end que não são do teste (ex.: markFeatureRenderForImageBlock is not defined).
-Como isso não representa falha do fluxo funcional sob teste e derruba o Cypress, foi aplicado um filtro estrito via Cypress.on('uncaught:exception') somente para essa mensagem específica, preservando falhas reais.
+- O carrinho não exibe metadados completos com consistência.
+- A PDP é a fonte primária de informação do produto.
+- Reduz flakiness e aumenta rastreabilidade do requisito.
 
-Caso de teste (E2E)
-CT01 — Adicionar livro físico NOVO ao carrinho e validar mensagem
+---
 
-Objetivo: garantir que o livro correto foi selecionado e adicionado ao carrinho como Novo e físico, validando a mensagem de confirmação.
+## Uso do Painel "Outros vendedores na Amazon"
 
-Passos:
+A condição (Novo/Usado) e o formato (Capa Comum) aparecem de forma consistente no painel lateral de ofertas.
 
-Acessar a página inicial da Amazon BR
+Decisão:
 
-Digitar o termo de busca e submeter pelo botão de busca
+Validar "Novo" e "Capa Comum" no mesmo contexto onde o botão "Adicionar ao carrinho" é acionado.
 
-Abrir o primeiro resultado relevante do livro “AI Engineering…”
+Isso garante coerência entre:
 
-Validar na PDP:
+- Oferta selecionada
+- Condição do produto
+- Formato físico
+- Ação executada
 
-Título contém “AI Engineering”
+---
 
-Autor contém “Chip Huyen”
+## Submissão da Busca pelo Botão
 
-Idioma contém “Inglês”
+A busca é submetida pelo botão:
 
-Abrir a área “Outros vendedores na Amazon” e acionar o painel lateral de ofertas
+#nav-search-submit-button
 
-No painel:
+Motivo:
 
-validar presença de “Capa Comum”
+O Enter pode ser interceptado pelo autocomplete da Amazon, gerando instabilidade (overlays, foco roubado, sugestões dinâmicas).
 
-validar presença de “Novo”
+---
 
-clicar em “Adicionar ao carrinho”
+## Tratamento de Exceção JavaScript do Site
 
-Validar que a mensagem exibida é exatamente: “Adicionado ao carrinho”
+Erro identificado:
 
-Resultado esperado:
+markFeatureRenderForImageBlock is not defined
 
-Mensagem “Adicionado ao carrinho” exibida exatamente.
+Esse erro é interno do site e não representa falha funcional do fluxo.
 
-O fluxo de seleção confirma “Novo” e “Capa Comum” antes do clique no CTA.
+Foi aplicado filtro específico via:
 
-Autor e idioma validados na PDP.
+Cypress.on('uncaught:exception')
 
-Observações de robustez (o que foi feito para reduzir flakiness)
+Apenas para essa mensagem exata, preservando falhas reais.
 
-Seletores priorizam:
+---
 
-id estáveis quando disponíveis (ex.: #twotabsearchtextbox, #productTitle)
+# Caso de Teste E2E
 
-e fallback por texto controlado quando necessário.
+## CT01 — Adicionar livro físico NOVO ao carrinho e validar mensagem
 
-Uso de force: true apenas onde o site aplica overlays/animações (padrão em Amazon).
+### Objetivo
 
-Submissão da busca por botão, reduzindo instabilidades do autocomplete.
+Garantir que o livro correto foi:
 
-Tratamento pontual (não genérico) para exceções JS do site que interrompem o Cypress.
+- Identificado
+- Validado
+- Selecionado como Novo
+- Selecionado como Capa Comum
+- Adicionado ao carrinho
 
-Validações feitas em páginas/contextos onde o dado é mais confiável (PDP e painel de ofertas).
+com validação da mensagem final.
+
+---
+
+## Passos
+
+1. Acessar Amazon BR  
+2. Buscar pelo texto completo do livro  
+3. Abrir resultado correspondente  
+4. Validar título, autor e idioma na PDP  
+5. Abrir painel "Outros vendedores na Amazon"  
+6. Validar "Novo" e "Capa Comum"  
+7. Clicar em "Adicionar ao carrinho"  
+8. Validar mensagem exata:  
+   Adicionado ao carrinho
+
+---
+
+## Resultado Esperado
+
+- Mensagem exibida exatamente:
+  Adicionado ao carrinho
+
+- Autor validado: Chip Huyen  
+- Idioma validado: Inglês  
+- Formato validado: Capa Comum  
+- Condição validada: Novo  
+
+---
+
+## Medidas de Robustez
+
+- Priorização de IDs estáveis:
+  - #twotabsearchtextbox
+  - #productTitle
+
+- Uso de force: true apenas quando necessário (overlays)
+
+- Submissão via botão (evita interferência do autocomplete)
+
+- Tratamento pontual de exceção JS
+
+- Validações feitas na PDP e no painel de ofertas (contextos mais confiáveis)
