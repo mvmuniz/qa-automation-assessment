@@ -111,6 +111,46 @@ Detalhamento completo:
 ➡ `docs/questao3.md`
 
 ---
+---
+
+# Questão 4 — Inteligência Artificial
+
+A resposta completa da Questão 4 está disponível em:
+➡ `docs/questao4.md`
+
+## Resumo da Abordagem
+
+### 1. Aspectos Avaliados em uma Aplicação Similar ao ChatGPT
+
+Ao testar uma aplicação baseada em Large Language Models (LLMs), foram considerados os seguintes critérios:
+
+- Coerência lógica das respostas
+- Manutenção de contexto conversacional
+- Aderência às instruções do prompt
+- Tratamento de ambiguidades
+- Ausência de alucinações factuais
+- Resistência a prompt injection
+- Segurança e proteção de dados
+- Performance e estabilidade sob carga
+- Observabilidade (logs, métricas e monitoramento)
+
+### 2. Uso de IA em QA
+
+Foi utilizado o ChatGPT como assistente técnico para:
+
+- Geração inicial de casos de teste
+- Criação de cenários edge case
+- Sugestão de estrutura para testes automatizados (Cypress e pytest)
+- Revisão e melhoria de scripts
+
+A IA foi aplicada para acelerar a elaboração de cenários, apoiar análise de requisitos e melhorar organização da documentação.
+
+A validação final foi sempre conduzida com análise crítica manual.
+
+### Conclusão
+
+A IA foi utilizada como ferramenta de apoio estratégico no processo de QA, aumentando produtividade e cobertura de testes, sem substituir responsabilidade técnica e pensamento crítico.
+
 
 ## Requisitos
 

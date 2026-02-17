@@ -71,6 +71,8 @@ jobs:
 
       - name: Run Cypress
         run: npx cypress run
+
+
 ## Job 1 – API (pytest)
 
 ### Ambiente
