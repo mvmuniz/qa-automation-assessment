@@ -11,9 +11,6 @@ jobs:
   api-tests:
     name: API - pytest
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: api
 
     steps:
       - name: Checkout repository
@@ -30,7 +27,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run pytest
-        run: pytest -v
+        run: pytest api/tests -v
 
   web-tests:
     name: Web - Cypress
